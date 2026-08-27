@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  --color-sky: #dbeefb;
+  --color-sky-deep: #a9d9f2;
+  --color-sky-deeper: #7fc2e8;
+  --color-navy: #0d2c4a;
+  --color-navy-soft: #3c5a78;
+  --color-card: #ffffff;
+  --color-pill: #aad9ec;
+  --color-pill-dark: #0d2c4a;
+  --color-leaf: #7c9b78;
+  --color-ink: #22344a;
+  --color-ink-soft: #5a7089;
+}
+
+@theme inline {
+  --color-sky: var(--color-sky);
+  --color-sky-deep: var(--color-sky-deep);
+  --color-sky-deeper: var(--color-sky-deeper);
+  --color-navy: var(--color-navy);
+  --color-navy-soft: var(--color-navy-soft);
+  --color-card: var(--color-card);
+  --color-pill: var(--color-pill);
+  --color-pill-dark: var(--color-pill-dark);
+  --color-leaf: var(--color-leaf);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --font-serif: var(--font-serif);
+  --font-script: var(--font-script);
+  --font-sans: var(--font-sans);
+}
+
+body {
+  background: var(--color-sky);
+  color: var(--color-ink);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.tracking-widest-xl {
+  letter-spacing: 0.28em;
+}
+
+.card-shadow {
+  box-shadow: 0 20px 45px -20px rgba(13, 44, 74, 0.35);
+}
