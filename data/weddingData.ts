@@ -11,8 +11,14 @@ export const weddingData = {
   },
 
   quote: {
-    text: "Todos somos mortales, hasta el primer beso y la segunda copa de vino.",
-    reference: "",
+    text: "Mejor son dos que uno.",
+    reference: "Eclesiastés 4:9",
+  },
+
+  // Versículo de cierre, mostrado al final de la página debajo del nombre de la pareja.
+  closingVerse: {
+    text: "A dondequiera que tú fueres, iré yo, y dondequiera que vivieres, viviré. Tu pueblo será mi pueblo, y tu Dios mi Dios. Sólo la muerte hará separación entre nosotros dos.",
+    reference: "Rut 1:16-17",
   },
 
   // Fecha y hora de la ceremonia en formato ISO — usada por el countdown y
@@ -40,18 +46,9 @@ export const weddingData = {
     padrinos: ["Esaú Trocones", "Salomé Enriquez"],
   },
 
-  ceremony: {
+  // Ceremonia y celebración ocurren juntas, en el mismo lugar y a continuación.
+  venue: {
     day: "Domingo 28 de Noviembre - Ingreso 2:30pm",
-    startISO: "2026-11-28T16:00:00",
-    place: "Local Huerta - Casa ex Caballeriza",
-    city: "",
-    reference:
-      "Entrada por el coliseo de gallos Fernando Graña, a espaldas de la casa Hacienda Huando",
-    mapsUrl: "https://maps.app.goo.gl/6wRDxWva6wdmouyt8",
-  },
-
-  reception: {
-    day: "Domingo 28 de Noviembre - Recepción a continuación",
     startISO: "2026-11-28T16:00:00",
     place: "Local Huerta - Casa ex Caballeriza",
     city: "",
@@ -63,8 +60,29 @@ export const weddingData = {
   dressCode: {
     title: "Código de vestimenta",
     subtitle: "Elegante",
-    ladies: "Mujeres: evitar rojo, gama de blancos y celeste",
-    gentlemen: "Varones: evitar beige, blanco y celeste",
+    ladies: {
+      label: "Mujeres",
+      avoid: [
+        { name: "Rojo", hex: "#DC2626" },
+        { name: "Blancos", hex: "#FFFFFF" },
+        { name: "Celeste", hex: "#7DD3FC" },
+      ],
+    },
+    gentlemen: {
+      label: "Varones",
+      avoid: [
+        { name: "Beige", hex: "#D8C3A5" },
+        { name: "Blanco", hex: "#FFFFFF" },
+        { name: "Celeste", hex: "#7DD3FC" },
+      ],
+    },
+  },
+
+  pool: {
+    title: "¡Un detalle para disfrutar!",
+    message:
+      "Nuestro local cuenta con piscina, así que quienes deseen disfrutar de ella pueden traer ropa de baño y un cambio de ropa para continuar celebrando cómodamente. 🩱👙✨",
+    closing: "¡Que la diversión también sea parte de este día tan especial! 💍🤍",
   },
 
   gifts: {

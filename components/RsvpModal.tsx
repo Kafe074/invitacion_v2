@@ -1,18 +1,14 @@
 "use client";
 
 import { Heart } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Modal from "./Modal";
 import { useGuest } from "./GuestProvider";
 import { getSupabaseBrowser } from "@/lib/supabase/browserClient";
 import { pillButton, pillButtonOutline } from "@/lib/styles";
 
-const EVENT_LABELS: Record<string, string> = {
-  ceremonia: "¿Asistes a la Ceremonia?",
-  celebracion: "¿Asistes a la Celebración?",
-};
-
-type Step = "names" | `attend-${string}` | "details";
+type Step = "names" | "attend" | "details";
+const STEPS: Step[] = ["names", "attend", "details"];
 
 export default function RsvpModal({
   open,
@@ -22,32 +18,24 @@ export default function RsvpModal({
   onClose: () => void;
 }) {
   const guest = useGuest();
-  const events = useMemo(
-    () => guest?.invitedEvents ?? ["ceremonia", "celebracion"],
-    [guest],
-  );
-  const steps = useMemo<Step[]>(
-    () => ["names", ...events.map((e) => `attend-${e}` as Step), "details"],
-    [events],
-  );
 
   const [stepIndex, setStepIndex] = useState(0);
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
   const [freeTextName, setFreeTextName] = useState("");
-  const [attendance, setAttendance] = useState<Record<string, boolean>>({});
+  const [attending, setAttending] = useState<boolean | null>(null);
   const [companions, setCompanions] = useState(0);
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const step = steps[stepIndex];
+  const step = STEPS[stepIndex];
 
   const reset = () => {
     setStepIndex(0);
     setSelectedNames([]);
     setFreeTextName("");
-    setAttendance({});
+    setAttending(null);
     setCompanions(0);
     setNotes("");
     setSubmitted(false);
@@ -69,14 +57,13 @@ export default function RsvpModal({
     if (step === "names") {
       return guest ? selectedNames.length > 0 : freeTextName.trim().length > 0;
     }
-    if (step.startsWith("attend-")) {
-      const eventKey = step.replace("attend-", "");
-      return attendance[eventKey] !== undefined;
+    if (step === "attend") {
+      return attending !== null;
     }
     return true;
   };
 
-  const goNext = () => setStepIndex((i) => Math.min(i + 1, steps.length - 1));
+  const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
   const goPrev = () => setStepIndex((i) => Math.max(i - 1, 0));
 
   const submit = async () => {
@@ -90,8 +77,8 @@ export default function RsvpModal({
         .insert({
           guest_id: guest?.id ?? null,
           guest_name: guestName,
-          attending_ceremonia: attendance.ceremonia ?? null,
-          attending_celebracion: attendance.celebracion ?? null,
+          attending_ceremonia: attending,
+          attending_celebracion: attending,
           companions,
           notes: notes.trim() || null,
         });
@@ -120,7 +107,7 @@ export default function RsvpModal({
       ) : (
         <div>
           <div className="mb-5 flex items-center justify-center gap-1.5">
-            {steps.map((s, i) => (
+            {STEPS.map((s, i) => (
               <span
                 key={s}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -168,29 +155,22 @@ export default function RsvpModal({
             </div>
           )}
 
-          {step.startsWith("attend-") && (
+          {step === "attend" && (
             <div>
               <p className="font-semibold text-navy">
-                {EVENT_LABELS[step.replace("attend-", "")]}{" "}
-                <span className="text-red-500">*</span>
+                ¿Asistirás? <span className="text-red-500">*</span>
               </p>
               <div className="mt-4 flex justify-center gap-3">
                 {[
-                  { label: "Sí, asistiré", value: true },
-                  { label: "No asistiré", value: false },
+                  { label: "Sí, ¡iré!", value: true },
+                  { label: "No podré ir", value: false },
                 ].map((opt) => {
-                  const eventKey = step.replace("attend-", "");
-                  const selected = attendance[eventKey] === opt.value;
+                  const selected = attending === opt.value;
                   return (
                     <button
                       key={opt.label}
                       type="button"
-                      onClick={() =>
-                        setAttendance((prev) => ({
-                          ...prev,
-                          [eventKey]: opt.value,
-                        }))
-                      }
+                      onClick={() => setAttending(opt.value)}
                       className={`rounded-full px-5 py-2.5 text-sm transition-all duration-150 hover:scale-105 active:scale-95 ${
                         selected
                           ? "bg-navy text-white"

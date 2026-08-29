@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ClipboardCheck, Music } from "lucide-react";
+import { ClipboardCheck, Music, Waves } from "lucide-react";
 import FloralCorner from "./FloralCorner";
 import Modal from "./Modal";
 import RevealOnScroll from "./RevealOnScroll";
@@ -11,11 +11,11 @@ import { BowTieIcon } from "./icons";
 import { pillButton } from "@/lib/styles";
 import { weddingData } from "@/data/weddingData";
 
-type OpenModal = "music" | "dressCode" | "tips" | null;
+type OpenModal = "music" | "dressCode" | "tips" | "pool" | null;
 
 export default function PartyCards() {
   const [openModal, setOpenModal] = useState<OpenModal>(null);
-  const { party, dressCode } = weddingData;
+  const { party, dressCode, pool } = weddingData;
 
   const cards = [
     {
@@ -39,6 +39,13 @@ export default function PartyCards() {
       description: party.tips.prompt,
       cta: "+ Info",
     },
+    {
+      key: "pool" as const,
+      icon: Waves,
+      title: "PISCINA",
+      description: pool.title,
+      cta: "+ Info",
+    },
   ];
 
   return (
@@ -50,7 +57,7 @@ export default function PartyCards() {
         </p>
       </RevealOnScroll>
 
-      <div className="relative mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3 lg:mt-16 lg:gap-10">
+      <div className="relative mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-8">
         <FloralCorner
           corner="tl"
           size={130}
@@ -63,7 +70,7 @@ export default function PartyCards() {
         />
         {cards.map((card, i) => (
           <RevealOnScroll key={card.key} delay={i * 0.1}>
-            <div className="card-shadow relative z-10 flex h-full flex-col items-center rounded-2xl bg-card px-6 py-8 lg:px-8 lg:py-10">
+            <div className="card-shadow relative z-10 flex h-full flex-col items-center rounded-2xl bg-card px-6 py-8 lg:px-6 lg:py-10">
               <h4 className="text-sm font-bold tracking-wide text-navy lg:text-base">
                 {card.title}
               </h4>
@@ -98,8 +105,28 @@ export default function PartyCards() {
         icon={BowTieIcon}
         title="Dress Code"
       >
-        <p>{dressCode.ladies}</p>
-        <p>{dressCode.gentlemen}</p>
+        <p className="text-base font-semibold text-navy lg:text-lg">{dressCode.subtitle}</p>
+        <p className="mt-1 text-xs uppercase tracking-widest-xl text-navy-soft lg:text-sm">
+          Colores a evitar
+        </p>
+        <div className="mt-5 flex flex-col gap-6">
+          {[dressCode.ladies, dressCode.gentlemen].map((group) => (
+            <div key={group.label}>
+              <p className="text-base font-semibold text-navy lg:text-lg">{group.label}</p>
+              <div className="mt-3 flex justify-center gap-5">
+                {group.avoid.map((color) => (
+                  <div key={color.name} className="flex flex-col items-center gap-1.5">
+                    <span
+                      className="h-9 w-9 rounded-full border border-navy/25 shadow-sm lg:h-10 lg:w-10"
+                      style={{ backgroundColor: color.hex }}
+                    />
+                    <span className="text-sm text-ink-soft lg:text-base">{color.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </Modal>
 
       <Modal
@@ -109,6 +136,16 @@ export default function PartyCards() {
         title="Tips y Notas"
       >
         <p>{party.tips.detail}</p>
+      </Modal>
+
+      <Modal
+        open={openModal === "pool"}
+        onClose={() => setOpenModal(null)}
+        icon={Waves}
+        title={pool.title}
+      >
+        <p>{pool.message}</p>
+        <p className="mt-3">{pool.closing}</p>
       </Modal>
     </section>
   );
