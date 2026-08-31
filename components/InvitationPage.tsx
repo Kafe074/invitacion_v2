@@ -5,7 +5,7 @@ import GiftsSection from "./GiftsSection";
 import GuestBlock from "./GuestBlock";
 import { GuestProvider, type Guest } from "./GuestProvider";
 import HeroSplit from "./HeroSplit";
-import InstagramCTA from "./InstagramCTA";
+import DotsCTA from "./DotsCTA";
 import PadrinosSection from "./PadrinosSection";
 import PartyCards from "./PartyCards";
 import RsvpSection from "./RsvpSection";
@@ -50,7 +50,7 @@ export default function InvitationPage({ guest }: { guest: Guest | null }) {
 
           <GiftsSection />
 
-          <InstagramCTA />
+          <DotsCTA />
 
           <SiteFooter />
         </main>

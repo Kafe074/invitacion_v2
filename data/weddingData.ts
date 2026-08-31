@@ -50,11 +50,10 @@ export const weddingData = {
   venue: {
     day: "Domingo 28 de Noviembre - Ingreso 2:30pm",
     startISO: "2026-11-28T16:00:00",
-    place: "Local Huerta - Casa ex Caballeriza",
-    city: "",
-    reference:
-      "Entrada por el coliseo de gallos Fernando Graña, a espaldas de la casa Hacienda Huando",
-    mapsUrl: "https://maps.app.goo.gl/6wRDxWva6wdmouyt8",
+    place: "LOS ÁNGELES - HOTEL",
+    city: "Av. 3 de Octubre, ex-Retes",
+    reference: "Frente a la procesadora Agriusac, entrada Casuarinas",
+    mapsUrl: "https://maps.app.goo.gl/WvHumeWdnnyrTqJq5",
   },
 
   dressCode: {
@@ -90,7 +89,7 @@ export const weddingData = {
     envelopeShower: "Lluvia de sobres",
     transfer: {
       label: "Transferencia",
-      account: "Cuenta Simple Soles: 898 p3388572231",
+      account: "Cuenta Simple Soles: 898 3388572231",
       routing: "CCI: 00389801338857223143",
     },
   },
@@ -107,11 +106,6 @@ export const weddingData = {
     music: {
       prompt: "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?",
     },
-    tips: {
-      prompt: "Información adicional para tener en cuenta",
-      detail:
-        "Para disfrutar plenamente de esta celebración, hemos reservado este día para nuestros invitados mayores de 10 años. Gracias por comprender y acompañarnos en este momento tan especial.",
-    },
   },
 
   notes: {
@@ -119,8 +113,13 @@ export const weddingData = {
       "Tu presencia ha sido considerada de manera especial. Esta invitación es personal.",
   },
 
-  instagram: {
-    hashtag: "nairobyyabraham",
+  photoShare: {
+    appName: "Dots Memories",
+    message: "Comparte tus fotos y videos de este día especial con nosotros a través de la app Dots Memories.",
+    androidUrl:
+      "https://play.google.com/store/apps/details?id=social.onelife&referrer=utm_medium%3Dweb%26utm_source%3Dfooter%26utm_term%3D",
+    iosUrl:
+      "https://apps.apple.com/app/apple-store/id6449039420?pt=126255739&mt=8&ct=web_footer_web&utm_medium=web&utm_source=footer&utm_term=",
   },
 };
 

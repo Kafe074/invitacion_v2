@@ -89,12 +89,32 @@ export function DressCodeIcon(props: IconProps) {
   );
 }
 
-export function InstagramIcon(props: IconProps) {
+export function AppleIcon({ size, ...rest }: IconProps) {
   return (
-    <svg viewBox="0 0 24 24" {...svgProps(props)}>
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+    <svg
+      viewBox="0 0 24 24"
+      width={size ?? rest.width ?? 24}
+      height={size ?? rest.height ?? 24}
+      fill="currentColor"
+      stroke="none"
+      {...rest}
+    >
+      <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zm3.532-3.229c.843-1.012 1.41-2.42 1.254-3.821-1.213.052-2.688.805-3.554 1.818-.78.896-1.462 2.326-1.28 3.703 1.345.104 2.735-.688 3.58-1.7z" />
+    </svg>
+  );
+}
+
+export function GooglePlayIcon({ size, ...rest }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size ?? rest.width ?? 24}
+      height={size ?? rest.height ?? 24}
+      fill="currentColor"
+      stroke="none"
+      {...rest}
+    >
+      <path d="M3.609 1.814L13.792 12 3.61 22.186a1.5 1.5 0 0 1-.61-1.207V3.021a1.5 1.5 0 0 1 .61-1.207zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1.5 1.5 0 0 1 0 2.53l-2.808 1.626L15.088 12l2.61-2.491zm-3.199-3.198l-8.635-8.635 10.937 6.333-2.302 2.302z" />
     </svg>
   );
 }

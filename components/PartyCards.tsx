@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ClipboardCheck, Music, Waves } from "lucide-react";
+import { Music, Waves } from "lucide-react";
 import FloralCorner from "./FloralCorner";
 import Modal from "./Modal";
 import RevealOnScroll from "./RevealOnScroll";
@@ -11,7 +11,7 @@ import { BowTieIcon } from "./icons";
 import { pillButton } from "@/lib/styles";
 import { weddingData } from "@/data/weddingData";
 
-type OpenModal = "music" | "dressCode" | "tips" | "pool" | null;
+type OpenModal = "music" | "dressCode" | "pool" | null;
 
 export default function PartyCards() {
   const [openModal, setOpenModal] = useState<OpenModal>(null);
@@ -33,13 +33,6 @@ export default function PartyCards() {
       cta: "Ver Más",
     },
     {
-      key: "tips" as const,
-      icon: ClipboardCheck,
-      title: "TIPS Y NOTAS",
-      description: party.tips.prompt,
-      cta: "+ Info",
-    },
-    {
       key: "pool" as const,
       icon: Waves,
       title: "PISCINA",
@@ -57,7 +50,7 @@ export default function PartyCards() {
         </p>
       </RevealOnScroll>
 
-      <div className="relative mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-8">
+      <div className="relative mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-3 lg:mt-16 lg:max-w-4xl lg:gap-8">
         <FloralCorner
           corner="tl"
           size={130}
@@ -127,15 +120,6 @@ export default function PartyCards() {
             </div>
           ))}
         </div>
-      </Modal>
-
-      <Modal
-        open={openModal === "tips"}
-        onClose={() => setOpenModal(null)}
-        icon={ClipboardCheck}
-        title="Tips y Notas"
-      >
-        <p>{party.tips.detail}</p>
       </Modal>
 
       <Modal
