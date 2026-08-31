@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MapPin } from "lucide-react";
 import type { ElementType } from "react";
 import AnimatedIconBadge from "./AnimatedIconBadge";
@@ -13,6 +14,7 @@ export default function VenueCard({
   city,
   reference,
   mapsUrl,
+  qrImage,
   eventTitle,
   eventStart,
 }: {
@@ -23,6 +25,7 @@ export default function VenueCard({
   city?: string;
   reference?: string;
   mapsUrl: string;
+  qrImage?: string;
   eventTitle: string;
   eventStart: Date;
 }) {
@@ -84,6 +87,23 @@ export default function VenueCard({
         <MapPin size={14} />
         ¿Cómo Llegar?
       </a>
+
+      {qrImage && (
+        <div className="mt-6 flex flex-col items-center">
+          <p className="text-xs tracking-widest-xl text-navy-soft lg:text-sm">
+            Escanea para ver la ubicación
+          </p>
+          <div className="card-shadow mt-3 rounded-2xl bg-white p-2.5">
+            <Image
+              src={qrImage}
+              alt="Código QR con la ubicación del lugar"
+              width={140}
+              height={140}
+              className="h-28 w-28 lg:h-32 lg:w-32"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -54,6 +54,7 @@ export const weddingData = {
     city: "Av. 3 de Octubre, ex-Retes",
     reference: "Frente a la procesadora Agriusac, entrada Casuarinas",
     mapsUrl: "https://maps.app.goo.gl/WvHumeWdnnyrTqJq5",
+    qrImage: "/images/venue-qr.jpg",
   },
 
   dressCode: {

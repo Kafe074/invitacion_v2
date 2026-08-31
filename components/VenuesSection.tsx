@@ -21,6 +21,7 @@ export default function VenuesSection() {
             city={venue.city}
             reference={venue.reference}
             mapsUrl={venue.mapsUrl}
+            qrImage={venue.qrImage}
             eventTitle={`Boda de ${couple.brideFirstName} y ${couple.groomFirstName}`}
             eventStart={new Date(venue.startISO)}
           />
