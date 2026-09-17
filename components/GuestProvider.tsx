@@ -3,7 +3,6 @@
 import { createContext, useContext, type ReactNode } from "react";
 
 export type Guest = {
-  id: string;
   slug: string;
   householdName: string;
   members: string[];

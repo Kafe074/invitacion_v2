@@ -4,7 +4,7 @@ import { Music } from "lucide-react";
 import { useState } from "react";
 import Modal from "./Modal";
 import { weddingData } from "@/data/weddingData";
-import { getSupabaseBrowser } from "@/lib/supabase/browserClient";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { pillButton } from "@/lib/styles";
 
 export default function SongSuggestionModal({
@@ -17,9 +17,7 @@ export default function SongSuggestionModal({
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
   const [suggestedBy, setSuggestedBy] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const close = () => {
     onClose();
@@ -31,33 +29,23 @@ export default function SongSuggestionModal({
     }
   };
 
-  const submit = async () => {
+  const submit = () => {
     if (!song.trim()) return;
-    setSubmitting(true);
-    setError(null);
 
-    try {
-      const { error: insertError } = await getSupabaseBrowser()
-        .from("song_suggestions")
-        .insert({
-          song: song.trim(),
-          artist: artist.trim() || null,
-          suggested_by: suggestedBy.trim() || null,
-        });
-      if (insertError) throw insertError;
-      setSubmitted(true);
-    } catch {
-      setError("No pudimos guardar la canción. Intenta de nuevo.");
-    } finally {
-      setSubmitting(false);
-    }
+    const lines = [`¡Hola! Quiero sugerir una canción para la playlist de la fiesta:`, song.trim()];
+    if (artist.trim()) lines.push(`Artista: ${artist.trim()}`);
+    if (suggestedBy.trim()) lines.push(`Sugerida por: ${suggestedBy.trim()}`);
+
+    const link = buildWhatsAppLink(weddingData.rsvp.whatsappTarget, lines.join("\n"));
+    window.open(link, "_blank", "noopener,noreferrer");
+    setSubmitted(true);
   };
 
   return (
     <Modal open={open} onClose={close} icon={Music} title="Sugerir Canción">
       {submitted ? (
         <div>
-          <p>¡Gracias! La agregamos a la playlist de la fiesta.</p>
+          <p>¡Gracias! Te abrimos WhatsApp con tu sugerencia lista — solo envíala.</p>
           <button
             type="button"
             onClick={close}
@@ -92,14 +80,13 @@ export default function SongSuggestionModal({
               className="rounded-full border border-navy/20 bg-sky/40 px-4 py-2 text-sm text-navy outline-none transition-colors focus:border-navy/50"
             />
           </div>
-          {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <button
             type="button"
             onClick={submit}
-            disabled={submitting || !song.trim()}
+            disabled={!song.trim()}
             className={`mt-6 px-6 py-2 text-sm ${pillButton} disabled:pointer-events-none disabled:opacity-50`}
           >
-            {submitting ? "Enviando..." : "Sugerir Canción"}
+            Sugerir Canción
           </button>
         </div>
       )}

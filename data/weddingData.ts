@@ -2,7 +2,7 @@
 // Para personalizar la invitación con los datos reales de la boda,
 // edita únicamente este archivo — no hace falta tocar los componentes.
 // Los datos específicos de cada invitado (nombres, eventos a los que está
-// invitado) NO viven acá: se administran en /admin y se guardan en Supabase.
+// invitado) viven en data/guests.ts.
 
 export const weddingData = {
   couple: {
@@ -35,10 +35,11 @@ export const weddingData = {
   },
 
   gallery: [
-    "/images/couple-2.jpg",
     "/images/couple-3.jpg",
     "/images/couple-4.jpg",
     "/images/couple-5.jpg",
+    "/images/couple-6.jpg",
+    "/images/couple-7.jpg",
   ],
 
   family: {
@@ -100,6 +101,9 @@ export const weddingData = {
     message: "Es importante que confirmes tu asistencia.",
     deadline: "Fecha límite para responder: 7 de Noviembre",
     contacts: ["983 943 012", "927 538 935"],
+    // Número al que se envían los mensajes de RSVP y sugerencia de canción
+    // (botones "Confirmar" / "Sugerir Canción").
+    whatsappTarget: "983 943 012",
   },
 
   party: {

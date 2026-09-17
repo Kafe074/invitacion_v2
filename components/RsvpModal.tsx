@@ -4,7 +4,8 @@ import { Heart } from "lucide-react";
 import { useState } from "react";
 import Modal from "./Modal";
 import { useGuest } from "./GuestProvider";
-import { getSupabaseBrowser } from "@/lib/supabase/browserClient";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
+import { weddingData } from "@/data/weddingData";
 import { pillButton, pillButtonOutline } from "@/lib/styles";
 
 type Step = "names" | "attend" | "details";
@@ -25,9 +26,7 @@ export default function RsvpModal({
   const [attending, setAttending] = useState<boolean | null>(null);
   const [companions, setCompanions] = useState(0);
   const [notes, setNotes] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const step = STEPS[stepIndex];
 
@@ -39,7 +38,6 @@ export default function RsvpModal({
     setCompanions(0);
     setNotes("");
     setSubmitted(false);
-    setError(null);
   };
 
   const close = () => {
@@ -66,36 +64,30 @@ export default function RsvpModal({
   const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
   const goPrev = () => setStepIndex((i) => Math.max(i - 1, 0));
 
-  const submit = async () => {
-    setSubmitting(true);
-    setError(null);
+  const submit = () => {
     const guestName = guest ? selectedNames.join(", ") : freeTextName.trim();
 
-    try {
-      const { error: insertError } = await getSupabaseBrowser()
-        .from("rsvps")
-        .insert({
-          guest_id: guest?.id ?? null,
-          guest_name: guestName,
-          attending_ceremonia: attending,
-          attending_celebracion: attending,
-          companions,
-          notes: notes.trim() || null,
-        });
-      if (insertError) throw insertError;
-      setSubmitted(true);
-    } catch {
-      setError("No pudimos guardar tu confirmación. Intenta de nuevo.");
-    } finally {
-      setSubmitting(false);
+    const lines = [
+      `Hola! Soy ${guestName} y quiero confirmar mi asistencia a la boda.`,
+      `Asistencia: ${attending ? "Sí, ¡ahí estaré!" : "No podré ir"}`,
+    ];
+    if (attending && companions > 0) {
+      lines.push(`Acompañantes adicionales: ${companions}`);
     }
+    if (notes.trim()) {
+      lines.push(`Notas: ${notes.trim()}`);
+    }
+
+    const link = buildWhatsAppLink(weddingData.rsvp.whatsappTarget, lines.join("\n"));
+    window.open(link, "_blank", "noopener,noreferrer");
+    setSubmitted(true);
   };
 
   return (
     <Modal open={open} onClose={close} icon={Heart} title="Confirmar Asistencia">
       {submitted ? (
         <div>
-          <p>¡Gracias por confirmar! Te esperamos.</p>
+          <p>¡Gracias por confirmar! Te abrimos WhatsApp con tu mensaje listo — solo envíalo.</p>
           <button
             type="button"
             onClick={close}
@@ -216,8 +208,6 @@ export default function RsvpModal({
             </div>
           )}
 
-          {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
-
           <div className="mt-6 flex items-center justify-between">
             <button
               type="button"
@@ -232,10 +222,9 @@ export default function RsvpModal({
               <button
                 type="button"
                 onClick={submit}
-                disabled={submitting}
-                className={`px-6 py-2 text-sm ${pillButton} disabled:pointer-events-none disabled:opacity-60`}
+                className={`px-6 py-2 text-sm ${pillButton}`}
               >
-                {submitting ? "Enviando..." : "Confirmar"}
+                Confirmar
               </button>
             ) : (
               <button
