@@ -10,7 +10,7 @@ function formatDateBadge(iso: string) {
 }
 
 export default function HeroSplit() {
-  const { couple, quote, weddingDateISO, photos } = weddingData;
+  const { couple, quote, weddingDateISO, photos, gallery } = weddingData;
 
   return (
     <section className="relative flex flex-col lg:min-h-screen lg:flex-row">
@@ -26,11 +26,20 @@ export default function HeroSplit() {
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center gap-4 overflow-hidden bg-sky px-8 py-16 text-center lg:w-1/2 lg:py-24">
+        <Image
+          src={gallery[0]}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-sky/85" />
+
         <FloralCorner corner="tl" size={140} className="opacity-90" />
         <FloralCorner corner="tr" size={140} className="opacity-90" />
         <FloralCorner corner="bl" size={120} className="opacity-80" />
 
-        <RevealOnScroll className="flex flex-col items-center gap-4 lg:gap-6">
+        <RevealOnScroll className="relative z-10 flex flex-col items-center gap-4 lg:gap-6">
           <span className="mt-12 rounded-full border border-navy/25 px-4 py-1 text-sm tracking-wide text-navy lg:mt-4 lg:px-5 lg:py-1.5 lg:text-base">
             {formatDateBadge(weddingDateISO)}
           </span>
