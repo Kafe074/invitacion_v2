@@ -40,6 +40,7 @@ export const weddingData = {
     "/images/couple-5.jpg",
     "/images/couple-6.jpg",
     "/images/couple-7.jpg",
+    "/images/couple-8.jpg",
   ],
 
   family: {

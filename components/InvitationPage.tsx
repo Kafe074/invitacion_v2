@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CountdownBadge from "./CountdownBadge";
 import EntryGate from "./entry/EntryGate";
 import GallerySection from "./GallerySection";
@@ -15,7 +16,7 @@ import WaveDivider from "./WaveDivider";
 import { weddingData } from "@/data/weddingData";
 
 export default function InvitationPage({ guest }: { guest: Guest | null }) {
-  const { couple, photos, song } = weddingData;
+  const { couple, photos, song, gallery } = weddingData;
   const coupleNames = `${couple.brideFirstName} y ${couple.groomFirstName}`;
 
   return (
@@ -34,9 +35,21 @@ export default function InvitationPage({ guest }: { guest: Guest | null }) {
 
           <GuestBlock />
 
-          <PadrinosSection />
+          <div className="relative overflow-hidden">
+            <Image
+              src={gallery[5]}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-sky/85" />
 
-          <VenuesSection />
+            <div className="relative z-10">
+              <PadrinosSection />
+              <VenuesSection />
+            </div>
+          </div>
           <WaveDivider color="var(--color-sky-deep)" height={70} flip />
 
           <RsvpSection />
