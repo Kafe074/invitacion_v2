@@ -45,7 +45,7 @@ export const weddingData = {
 
   family: {
     // Padrinos de la boda.
-    padrinos: ["Esaú Trocones", "Salomé Enriquez"],
+    padrinos: ["Esaú Trocones Yuto", "Salomé Enríquez Olazábal"]
   },
 
   // Ceremonia y celebración ocurren juntas, en el mismo lugar y a continuación.
