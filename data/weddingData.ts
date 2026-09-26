@@ -50,7 +50,7 @@ export const weddingData = {
 
   // Ceremonia y celebración ocurren juntas, en el mismo lugar y a continuación.
   venue: {
-    day: "Domingo 28 de Noviembre - Ingreso 2:30pm",
+    day: "Sábado 28 de Noviembre - Ingreso 2:30pm",
     startISO: "2026-11-28T16:00:00",
     place: "LOS ÁNGELES - HOTEL",
     city: "Av. 3 de Octubre, ex-Retes",
