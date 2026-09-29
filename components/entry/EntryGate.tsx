@@ -144,7 +144,16 @@ export default function EntryGate({
         )}
       </AnimatePresence>
 
-      {entered && children}
+      {/* El contenido se monta desde el inicio (oculto detrás de la
+          pantalla de bienvenida) para que el video del hero ya esté
+          cargado y reproduciéndose apenas el usuario ingresa, en vez de
+          mostrar un frame estático mientras el video recién carga. */}
+      <div
+        aria-hidden={!entered}
+        className={entered ? undefined : "invisible h-screen overflow-hidden"}
+      >
+        {children}
+      </div>
     </>
   );
 }

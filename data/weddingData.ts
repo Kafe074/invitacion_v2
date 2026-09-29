@@ -34,6 +34,13 @@ export const weddingData = {
     instagram: "/images/couple-2.jpg",
   },
 
+  // Video de fondo para la primera sección (hero), estilo GIF: se reproduce
+  // en loop automáticamente, sin audio y sin controles para pausarlo.
+  // Coloca el archivo en public/video/hero.mp4 (ideal: unos segundos, sin audio,
+  // comprimido en H.264 para que cargue rápido). Si heroVideo es null, se usa
+  // la foto de photos.hero como antes.
+  heroVideo: "/video/hero.mp4" as string | null,
+
   gallery: [
     "/images/couple-3.jpg",
     "/images/couple-4.jpg",

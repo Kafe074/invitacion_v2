@@ -1,5 +1,6 @@
 import Image from "next/image";
 import FloralCorner from "./FloralCorner";
+import HeroVideo from "./HeroVideo";
 import RevealOnScroll from "./RevealOnScroll";
 import { weddingData } from "@/data/weddingData";
 
@@ -10,19 +11,27 @@ function formatDateBadge(iso: string) {
 }
 
 export default function HeroSplit() {
-  const { couple, quote, weddingDateISO, photos, gallery } = weddingData;
+  const { couple, quote, weddingDateISO, photos, gallery, heroVideo } = weddingData;
 
   return (
     <section className="relative flex flex-col lg:min-h-screen lg:flex-row">
       <div className="relative aspect-[4/5] w-full overflow-hidden lg:aspect-auto lg:w-1/2 lg:rounded-tr-[45%] lg:rounded-br-[45%]">
-        <Image
-          src={photos.hero}
-          alt={`${couple.brideFirstName} y ${couple.groomFirstName}`}
-          fill
-          sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-cover"
-          priority
-        />
+        {heroVideo ? (
+          <HeroVideo
+            src={heroVideo}
+            poster={photos.hero}
+            ariaLabel={`${couple.brideFirstName} y ${couple.groomFirstName}`}
+          />
+        ) : (
+          <Image
+            src={photos.hero}
+            alt={`${couple.brideFirstName} y ${couple.groomFirstName}`}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+            priority
+          />
+        )}
       </div>
 
       <div className="relative flex w-full flex-col items-center justify-center gap-4 overflow-hidden bg-sky px-8 py-16 text-center lg:w-1/2 lg:py-24">
