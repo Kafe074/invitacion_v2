@@ -11,7 +11,7 @@ import { BowTieIcon } from "./icons";
 import { pillButton } from "@/lib/styles";
 import { weddingData } from "@/data/weddingData";
 
-type OpenModal = "music" | "dressCode" | "pool" | null;
+type OpenModal = "music" | "pool" | null;
 
 export default function PartyCards() {
   const [openModal, setOpenModal] = useState<OpenModal>(null);
@@ -30,7 +30,6 @@ export default function PartyCards() {
       icon: BowTieIcon,
       title: "DRESS CODE",
       description: dressCode.subtitle,
-      cta: "Ver Más",
     },
     {
       key: "pool" as const,
@@ -75,13 +74,36 @@ export default function PartyCards() {
                 <card.icon size={36} className="text-navy lg:size-11" />
               </motion.div>
               <p className="mt-4 text-sm text-ink-soft lg:text-base">{card.description}</p>
-              <button
-                type="button"
-                onClick={() => setOpenModal(card.key)}
-                className={`mt-6 px-6 py-2 text-sm lg:px-7 lg:py-2.5 lg:text-base ${pillButton}`}
-              >
-                {card.cta}
-              </button>
+              {card.key === "dressCode" ? (
+                <div className="mt-5 flex w-full flex-col gap-4">
+                  {[dressCode.ladies, dressCode.gentlemen].map((group) => (
+                    <div key={group.label}>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-navy-soft">
+                        {group.label}
+                      </p>
+                      <div className="mt-2 flex justify-center gap-3">
+                        {group.avoid.map((color) => (
+                          <div key={color.name} className="flex flex-col items-center gap-1">
+                            <span
+                              className="h-7 w-7 rounded-full border border-navy/25 shadow-sm"
+                              style={{ backgroundColor: color.hex }}
+                            />
+                            <span className="text-xs text-ink-soft">{color.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setOpenModal(card.key)}
+                  className={`mt-6 px-6 py-2 text-sm lg:px-7 lg:py-2.5 lg:text-base ${pillButton}`}
+                >
+                  {card.cta}
+                </button>
+              )}
             </div>
           </RevealOnScroll>
         ))}
@@ -91,36 +113,6 @@ export default function PartyCards() {
         open={openModal === "music"}
         onClose={() => setOpenModal(null)}
       />
-
-      <Modal
-        open={openModal === "dressCode"}
-        onClose={() => setOpenModal(null)}
-        icon={BowTieIcon}
-        title="Dress Code"
-      >
-        <p className="text-base font-semibold text-navy lg:text-lg">{dressCode.subtitle}</p>
-        <p className="mt-1 text-xs uppercase tracking-widest-xl text-navy-soft lg:text-sm">
-          Colores a evitar
-        </p>
-        <div className="mt-5 flex flex-col gap-6">
-          {[dressCode.ladies, dressCode.gentlemen].map((group) => (
-            <div key={group.label}>
-              <p className="text-base font-semibold text-navy lg:text-lg">{group.label}</p>
-              <div className="mt-3 flex justify-center gap-5">
-                {group.avoid.map((color) => (
-                  <div key={color.name} className="flex flex-col items-center gap-1.5">
-                    <span
-                      className="h-9 w-9 rounded-full border border-navy/25 shadow-sm lg:h-10 lg:w-10"
-                      style={{ backgroundColor: color.hex }}
-                    />
-                    <span className="text-sm text-ink-soft lg:text-base">{color.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Modal>
 
       <Modal
         open={openModal === "pool"}
